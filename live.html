@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Human: Motion Analytics Demo</title>
+    <meta name="viewport" content="width=device-width" id="viewport">
+    <meta name="keywords" content="Human">
+    <meta name="application-name" content="Human">
+    <meta name="description" content="Human-Avatar: Realtime Rigged 3D Avatar/Skeleton Body Tracking & Animation using Human Library and BabylonJS with Inverse Kinematics; Author: Vladimir Mandic <https://github.com/vladmandic>">
+    <meta name="msapplication-tooltip" content="Human-Avatar: Realtime Rigged 3D Avatar/Skeleton Body Tracking & Animation using Human Library and BabylonJS with Inverse Kinematics; Author: Vladimir Mandic <https://github.com/vladmandic>">
+    <meta name="theme-color" content="#000000">
+    <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="../assets/fontawesome.css">
+    <script src="../dist/live.js" type="module"></script>
+    <style>
+      @font-face { font-family: 'Lato'; font-display: swap; font-style: normal; font-weight: 100; src: local('Lato'), url('../assets/lato-light.ttf') }
+      html { font-family: 'Lato', 'Segoe UI'; font-size: 16px; font-variant: small-caps; }
+      body { margin: 0; background: black; color: white; overflow-x: hidden; width: 100vw; height: 100vh; }
+      body::-webkit-scrollbar { display: none }
+      .input { height: auto; object-fit: contain; object-position: left; position: absolute; top: 20px; left: 20px; cursor: progress; visibility: hidden; min-width: 100px; }
+      .input-bar { object-fit: contain; object-position: left; position: absolute; left: 20px; cursor: progress; visibility: hidden; background-color: #666666; color: white; z-index: 99; padding: 4px; align-items: center; overflow: hidden; }
+      .log { padding-left: 8px; margin: 0; position: absolute; bottom: 0; height: 250px; pointer-events: none; overflow: hidden; color: #dddddd; }
+      .status { position: absolute; top: 12px; right: 8px; background-color: #666666; padding: 8px; box-shadow: 2px 2px black; cursor: alias; }
+      .data { position: absolute; top: 80px; right: 8px; background-color: #444444; opacity: 50%; padding: 4px; font-size: 0.8rem; height: auto; width: 200px; pointer-events: none; text-align: end; visibility: hidden; }
+      .telemetry { position: absolute; top: 80px; right: 8px; background-color: #444444; opacity: 80%; font-size: 0.9rem; height: auto; width: auto; line-height: 1.7rem; display: grid; cursor: pointer; }
+      .select { font-family: 'Lato', 'Segoe UI'; font-size: 16px; font-variant: small-caps; height: 24px; width: 200px; background-color: #666666; color: white; box-shadow: 2px 2px black; padding: 2px; margin: 4px }
+      .range { width: 200px; background-color: #666666; color: white; box-shadow: 2px 2px black; font-size: 0.7rem; margin: 4px; }
+      .menu { position: absolute; right: 8px; bottom: 8px; width: min-content; padding: 4px; overflow: hidden }
+      .bonename { padding-left: 40px; }
+      .clone { position: absolute; left: 20px };
+      .fad { padding: 4px 1px 4px 1px }
+      .fad:hover { color: #D7B6A5; }
+      button { margin: 4px 4px 0px 4px; padding: 2px; background-color: #50555C; color: white; font-family: 'Lato'; font-variant: small-caps; width: -webkit-fill-available; }
+      input[type=range] { width: 120px; height: 16px; -webkit-appearance: none; margin: 4px; background: #50555C; box-shadow: 2px 2px black }
+      input[type=range]:focus { outline: none; }
+      input[type=range]::-webkit-slider-runnable-track { width: 100%; height: 12px; cursor: pointer; border-radius: 2px; border: 0px solid #000000; }
+      input[type=range]::-webkit-slider-thumb { box-shadow: 0px 0px 0px #000000; border: 0px solid #000000; height: 12px; width: 24px; border-radius: 2px; background: #770033; cursor: pointer; -webkit-appearance: none; margin-top: 0px; }
+      input[type=range]:focus::-webkit-slider-runnable-track { background: #50555C; }
+    </style>
+  </head>
+  <body>
+    <pre id="status" class="status" style="visibility: hidden">loading</pre>
+    <div id="media">
+      <div id="media-top" class="input-bar" style="width: 500px; height: 16px; font-size: 0.9rem; opacity: 70%">top</div>
+      <img id="image" class="input" style="width: 500px"></img>
+      <video id="video" class="input" style="width: 500px"></video>
+      <div id="media-bottom" class="input-bar" style="width: 500px; font-size: 1.6rem; letter-spacing: 4px; display: flex; cursor: pointer">
+        &nbsp
+        <i id="video-play" class="fad fa-pause-circle" title="play / pause"></i>
+        &nbsp&nbsp
+        <i id="video-slower" class="fad fa-sort-circle-down" title="slower speed"></i>	
+        <i id="video-normal" class="fad fa-sort-circle" title="normal speed"></i>	
+        <i id="video-faster" class="fad fa-sort-circle-up" title="faster speed"></i>	
+        &nbsp&nbsp
+        <i id="video-start" class="fas fa-fast-backward" title="rewind to start"></i>
+        <i id="video-stepleft" class="fad fa-step-backward" title="step backward"></i>
+        <i id="video-left" class="fad fa-backward" title="move backward 0.50 sec"></i>
+        <i id="video-right" class="fad fa-forward" title="move forward 0.50 sec"></i>	
+        <i id="video-stepright" class="fad fa-step-forward" title="step forward"></i>	
+        &nbsp
+        <progress id="video-progress" style="width: -webkit-fill-available" title="video progress"></progress>
+        &nbsp
+        <div id="video-status" style="font-size: 0.7rem; letter-spacing: normal; min-width: 60px; display: block">
+          <div id="video-frame" title="current processed frame"></div>
+          <div id="video-time" title="current video timestamp"></div>
+          <div id="video-rate" title="current video playback rate"></div>
+        </div>
+      </div>
+    </div>
+    <canvas id="output" width=1920 height=1080 style="width: 100%; height: 100%"></canvas>
+    <div id="telemerty-panel" class="telemetry" style="display: none; width: 170px">
+      <div id="telemetry-heading" style="background-color: #666666; ">
+        <div style="font-size: 1rem; text-align: center; font-weight: 800; background-color: #5F0029; height: 32px">kinematics</div>
+        <div style="padding: 4px 8px 0 12px">
+          <i class="fad fa-users"></i>
+          <select id="telemetry-person" name="telemetry-person" title="telemetry-person" class="select" style="width: 120px; height: 32px"></select>
+        </div>
+        <div style="padding: 0 8px 8px 12px">
+          <i class="fad fa-user-cog"></i>
+          <select id="telemetry-input" name="telemetry-input" title="telemetry-input" class="select" style="width: 120px; height: 32px">
+            <option value="data" selected>rotation data</option>
+            <option value="trace">path tracing</option>
+            <option value="chart">chart timeline</option>
+          </select>
+        </div>
+      </div>
+      <div id="telemetry" style="display: grid"></div>
+    </div>
+    <pre id="log" class="log" style="visibility: hidden"></pre>
+    <div id="menu" class="menu">
+      <div id="showmenu" style="cursor: zoom-out; height: fit-content; text-align: right">&nbsp ... &nbsp</div>
+      <form class="range">
+        <button id="reset">reset scene</button><br>
+        <input id="scalex" name="scalex" type="range" min="-5" max="5" step="0.1" value="0.8" oninput="scalexval.value = `scale x: ${scalex.valueAsNumber.toFixed(2)}`">
+        <output id="scalexval" name="scalexval">scale x: 0.8</output><br>
+        <input id="scaley" name="scaley" type="range" min="-5" max="5" step="0.1" value="2.0" oninput="scaleyval.value = `scale y: ${scaley.valueAsNumber.toFixed(2)}`">
+        <output id="scaleyval" name="scaleyval">scale y: 2.0</output><br>
+        <input id="scalez" name="scalez" type="range" min="-5" max="5" step="0.1" value="1.0" oninput="scalezval.value = `scale z: ${scalez.valueAsNumber.toFixed(2)}`">
+        <output id="scalezval" name="scalezval">scale z: 1.0</output><br>
+        <input id="smooth" name="smooth" type="range" min="0" max="99" step="1" value="10" oninput="smoothval.value = `smooth: ${smooth.valueAsNumber.toFixed(2)}`">
+        <output id="smoothval" name="smoothval">smooth: 10</output><br>
+        <input id="minscore" name="minscore" type="range" min="0.1" max="1" step="0.1" value="0.1" oninput="minscoreval.value = `score: ${minscore.valueAsNumber.toFixed(2)}`">
+        <output id="minscoreval" name="minscoreval">score: 0.1</output><br>
+      </form>
+      <select id="input" name="input" title="input" class="select">
+        <option value="live" selected>live: webcam</option>     
+      </select>
+      <select id="camera" name="camera" title="camera" class="select">
+        <option value="none" selected>camera controls</option>
+        <option value="frontview">frontal view</option>
+        <option value="lsideview">left side view</option>
+        <option value="rsideview">right side view</option>
+        <option value="topdown">top-down view</option>
+        <option value="rotatealpha">rotate 360</option>
+        <option value="autorotate">auto rotate</option>
+        <option value="autoframe">auto frame</option>
+      </select>
+      <select id="viewports" name="viewports" title="viewports" class="select">
+        <option value="1" selected>viewport: main view</option>
+        <option value="2">viewport: side-by-side</option>
+        <option value="3">viewport: triple view</option>
+        <option value="4">viewport: square grid</option>
+      </select>
+      <select id="tracking" name="tracking" title="tracking" class="select">
+        <option value="single" selected>tracking: single person</option>
+        <option value="multiple">tracking: multiple people</option>
+      </select>
+      <select id="show" name="show" title="show" class="select">
+        <option value="showhide" selected>show/hide components</option>
+        <option value="showinput">input video</option>
+        <option value="showaxistext">axis title</option>
+        <option value="showwireframe">avatar wireframe</option>
+        <option value="showanchors">anchor points</option>
+        <option value="showtelemetry">telemetry panel</option>
+        <option value="showclonecanvas">clone images</option>
+        <option value="showrawdetection">raw detection frame</option>
+        <option value="showinspector">inspector</option>
+        <option value="showlog">log output</option>
+        <option value="showstatus">status callout</option>
+      </select>
+    </div>
+  </body>
+</html>

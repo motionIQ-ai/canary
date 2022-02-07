@@ -1,2 +1,2 @@
-# demo-private
+# demo
 Demo app

@@ -1,0 +1,6 @@
+samples/downsample
+samples/original
+samples/todo
+*.webm
+*.jpg
+*.json
