@@ -1,2 +1,1 @@
-# demo
-Demo app
+# motionIQ Private Demo
