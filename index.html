@@ -62,16 +62,16 @@
       <div id="showmenu" style="cursor: zoom-out; height: fit-content; text-align: right">&nbsp ... &nbsp</div>
       <form class="range">
         <button id="reset">reset scene</button><br>
-        <input id="scalex" name="scalex" type="range" min="-5" max="5" step="0.01" value="0.8" oninput="scalexval.value = `scale x-axis: ${scalex.valueAsNumber.toFixed(2)}`">
-        <output id="scalexval" name="scalexval">scale x-axis: 0.90</output><br>
-        <input id="scaley" name="scaley" type="range" min="-5" max="5" step="0.01" value="2.0" oninput="scaleyval.value = `scale y-axis: ${scaley.valueAsNumber.toFixed(2)}`">
-        <output id="scaleyval" name="scaleyval">scale y-axis: 1.80</output><br>
-        <input id="scalez" name="scalez" type="range" min="-10" max="10" step="0.01" value="3.0" oninput="scalezval.value = `scale z-axis: ${scalez.valueAsNumber.toFixed(2)}`">
-        <output id="scalezval" name="scalezval">scale z-axis: 3.00</output><br>
-        <input id="smooth" name="smooth" type="range" min="0" max="99" step="1" value="10" oninput="smoothval.value = `smooth steps: ${smooth.valueAsNumber.toFixed(0)}`">
-        <output id="smoothval" name="smoothval">smooth steps: 10</output><br>
-        <input id="minscore" name="minscore" type="range" min="0.1" max="1" step="0.01" value="0.40" oninput="minscoreval.value = `min score: ${minscore.valueAsNumber.toFixed(2)}`">
-        <output id="minscoreval" name="minscoreval">min score: 0.40</output><br>
+        <input id="scalex" name="scalex" type="range" min="-5" max="5" step="0.01" value="0" oninput="scalexval.value = `scale x-axis: ${scalex.valueAsNumber.toFixed(2)}`">
+        <output id="scalexval" name="scalexval">scale x-axis: 0.00</output><br>
+        <input id="scaley" name="scaley" type="range" min="-5" max="5" step="0.01" value="0" oninput="scaleyval.value = `scale y-axis: ${scaley.valueAsNumber.toFixed(2)}`">
+        <output id="scaleyval" name="scaleyval">scale y-axis: 0.00</output><br>
+        <input id="scalez" name="scalez" type="range" min="-10" max="10" step="0.01" value="0" oninput="scalezval.value = `scale z-axis: ${scalez.valueAsNumber.toFixed(2)}`">
+        <output id="scalezval" name="scalezval">scale z-axis: 0.00</output><br>
+        <input id="smooth" name="smooth" type="range" min="0" max="99" step="1" value="0" oninput="smoothval.value = `smooth steps: ${smooth.valueAsNumber.toFixed(0)}`">
+        <output id="smoothval" name="smoothval">smooth steps: 0</output><br>
+        <input id="minscore" name="minscore" type="range" min="0.1" max="1" step="0.01" value="1.00" oninput="minscoreval.value = `min score: ${minscore.valueAsNumber.toFixed(2)}`">
+        <output id="minscoreval" name="minscoreval">min score: 1.00</output><br>
         <input id="maxpersons" name="maxpersons" type="range" min="1" max="10" step="1" value="1" oninput="maxpersonsval.value = `max persons: ${maxpersons.valueAsNumber.toFixed(0)}`">
         <output id="maxpersonsval" name="maxpersonsval">max persons: 1</output><br>
       </form>
