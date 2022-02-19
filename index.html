@@ -49,7 +49,8 @@
         <div style="padding: 0 8px 8px 12px">
           <i class="fad fa-user-cog"></i>
           <select id="telemetry-input" name="telemetry-input" title="telemetry-input" class="select" style="width: 120px; height: 32px">
-            <option value="data" selected>rotation data</option>
+            <option value="rotation" selected>rotation data</option>
+            <option value="position">position data</option>
             <option value="trace">path tracing</option>
             <option value="chart">chart timeline</option>
           </select>
@@ -66,7 +67,7 @@
         <output id="scalexval" name="scalexval">scale x-axis: 0.00</output><br>
         <input id="scaley" name="scaley" type="range" min="-5" max="5" step="0.01" value="0" oninput="scaleyval.value = `scale y-axis: ${scaley.valueAsNumber.toFixed(2)}`">
         <output id="scaleyval" name="scaleyval">scale y-axis: 0.00</output><br>
-        <input id="scalez" name="scalez" type="range" min="-10" max="10" step="0.01" value="0" oninput="scalezval.value = `scale z-axis: ${scalez.valueAsNumber.toFixed(2)}`">
+        <input id="scalez" name="scalez" type="range" min="-5" max="5" step="0.01" value="0" oninput="scalezval.value = `scale z-axis: ${scalez.valueAsNumber.toFixed(2)}`">
         <output id="scalezval" name="scalezval">scale z-axis: 0.00</output><br>
         <input id="smooth" name="smooth" type="range" min="0" max="99" step="1" value="0" oninput="smoothval.value = `smooth steps: ${smooth.valueAsNumber.toFixed(0)}`">
         <output id="smoothval" name="smoothval">smooth steps: 0</output><br>
