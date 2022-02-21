@@ -24,7 +24,6 @@
       .range { width: 200px; background-color: #666666; color: white; box-shadow: 2px 2px black; font-size: 0.7rem; margin: 4px; }
       .menu { position: absolute; right: 8px; bottom: 8px; width: min-content; padding: 4px; overflow: hidden }
       .bonename { padding-left: 40px; }
-      .clone { position: absolute; left: 20px };
       .fad { padding: 4px 1px 4px 1px }
       .fad:hover { color: #D7B6A5; }
       button { margin: 4px 4px 0px 4px; padding: 2px; background-color: #50555C; color: white; font-family: 'Lato'; font-variant: small-caps; width: -webkit-fill-available; }
@@ -39,7 +38,7 @@
     <pre id="status" class="status" style="visibility: hidden">loading</pre>
     <div id="media"></div>
     <canvas id="output" width=1920 height=1080 style="width: 100%; height: 100%"></canvas>
-    <div id="telemerty-panel" class="telemetry" style="display: none; width: 170px">
+    <div id="telemerty-panel" class="telemetry" style="display: none; width: 180px">
       <div id="telemetry-heading" style="background-color: #666666; ">
         <div style="font-size: 1rem; text-align: center; font-weight: 800; background-color: #5F0029; height: 32px">kinematics</div>
         <div style="padding: 4px 8px 0 12px">
@@ -108,6 +107,7 @@
         <option value="showtitle">person title</option>
         <option value="showwireframe">avatar wireframe</option>
         <option value="showanchors">anchor points</option>
+        <option value="showvectors">direction vectors</option>
         <option value="showtelemetry">telemetry panel</option>
         <option value="showclonecanvas">clone images</option>
         <option value="showinspector">inspector</option>
