@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>motionIQ Private Demo</title>
+    <title>motionIQ: Canary</title>
     <meta name="viewport" content="width=device-width" id="viewport">
     <meta name="keywords" content="motionIQ">
     <meta name="application-name" content="motionIQ">
@@ -17,24 +17,20 @@
       html { font-family: 'Lato', 'Segoe UI'; font-size: 16px; font-variant: small-caps; }
       body { margin: 0; background: black; color: white; overflow-x: hidden; width: 100vw; height: 100vh; }
       body::-webkit-scrollbar { display: none }
-      .log { position: absolute; bottom: 0; left: 210px; height: 250px; width: 100%; pointer-events: none; overflow: hidden; color: #dddddd; }
-      .status { position: absolute; top: 12px; right: 8px; background-color: #666666; padding: 8px; box-shadow: 2px 2px black; cursor: alias; }
-      .data { position: absolute; top: 80px; right: 8px; background-color: #444444; opacity: 50%; padding: 4px; font-size: 0.8rem; height: auto; width: 200px; pointer-events: none; text-align: end; visibility: hidden; }
-      .telemetry { position: absolute; top: 80px; right: 8px; background-color: #444444; opacity: 80%; font-size: 0.9rem; height: auto; width: auto; line-height: 1.7rem; display: grid; cursor: pointer; }
-      .select { font-family: 'Lato', 'Segoe UI'; font-size: 16px; font-variant: small-caps; height: 24px; width: 195px; background-color: #666666; color: white; box-shadow: 2px 2px black; padding: 2px; margin: 4px; }
-      .range { width: 220px; background-color: #666666AA; color: white; box-shadow: 2px 2px black; font-size: 0.7rem; margin: 4px; padding: 2px; }
-      .menu { position: absolute; left: 0; top: 0; width: 220px; height: 100%; padding: 12px; margin: 2px; margin: 2; overflow: visible; visibility: hidden; }
+      input { font-family: 'Lato', 'Segoe UI'; font-size: 14px; font-variant: small-caps; }
+      select { font-family: 'Lato', 'Segoe UI'; font-size: 14px; font-variant: small-caps; }
+      .menu { position: absolute; left: 0; top: 0; width: 220px; min-height: 100%; max-height: max-content; padding: 12px; margin: 0; overflow: visible; visibility: hidden; }
       .menu:hover { background-color: black }
       .menuSection { font-weight: 800; overflow: hidden; margin-bottom: 16px; letter-spacing: 2px; }
       .menuItem { font-weight: 400; margin-left: 6px; letter-spacing: 0px;}
       .menuHide:hover { color:yellow; transform: scale(1.2); }
-      .menuBtnWide { margin: 4px 4px 2px 4px; padding: 4px; background-color: #50555C; color: white; font-family: 'Lato'; font-variant: small-caps; width: 220px; letter-spacing: 1px; border-width: 0; box-shadow: 2px 2px black; }
+      .menuBtnWide { margin: 4px 4px 2px 4px; padding: 4px; background-color: #50555C; color: white; font-family: 'Lato'; font-variant: small-caps; width: 220px; letter-spacing: 1px; border-width: 0; box-shadow: 6px 6px 8px 2px #333333; }
       .menuBtnWide:hover { background-color: #ffc100 }
-      .menuBtnIcon { margin: 0 2px 2px 0; padding: 0; background-color: #50555C; color: white; width: 30px; height: 30px; font-size: 26px; border-width: 0; box-shadow: 2px 2px black; border-radius: 4px; }
-      .menuBtnIcon:hover { background-color: #ffc100 }
-      input { font-family: 'Lato', 'Segoe UI'; font-size: 14px; font-variant: small-caps; }
-      select { font-family: 'Lato', 'Segoe UI'; font-size: 14px; font-variant: small-caps; }
-      input[type=range] { width: 100px; height: 16px; -webkit-appearance: none; margin: 4px; background: #50555C; box-shadow: 2px 2px black }
+      .menuBtnIcon { margin: 0 2px 2px 0; padding: 0; background-color: #50555C; color: white; width: 30px; height: 30px; font-size: 26px; border-width: 0; border-radius: 4px;  box-shadow: 6px 6px 8px 2px #333333; transition: all 0.5s;}
+      .menuBtnIcon:hover { background-color: #ffc100; }
+      .menuSelect { font-family: 'Lato', 'Segoe UI'; font-size: 16px; font-variant: small-caps; height: 24px; width: 220px; background-color: #666666; color: white; padding: 2px; margin: 4px; box-shadow: 6px 6px 8px 2px #333333; }
+      .menuRange { width: 220px; background-color: #666666AA; color: white; font-size: 0.7rem; margin: 4px; padding: 2px; box-shadow: 6px 6px 8px 2px #333333; }
+      input[type=range] { width: 100px; height: 16px; -webkit-appearance: none; margin: 4px; background: #50555C; box-shadow: 6px 6px 8px 2px #333333; }
       input[type=range]:focus { outline: none; }
       input[type=range]::-webkit-slider-runnable-track { width: 100%; height: 12px; cursor: pointer; border-radius: 2px; border: 0px solid #000000; }
       input[type=range]::-webkit-slider-thumb { box-shadow: 0px 0px 0px #000000; border: 0px solid #000000; height: 12px; width: 24px; border-radius: 2px; background: #770033; cursor: pointer; -webkit-appearance: none; margin-top: 0px; }
@@ -42,10 +38,10 @@
     </style>
   </head>
   <body>
-    <pre id="status" class="status" style="visibility: hidden">loading</pre>
-    <div id="media" style="position: absolute; top: 0; left: 0"></div>
-    <canvas id="output" width=1920 height=1080 style="width: 100%; height: 100%"></canvas>
-    <pre id="log" class="log" style="visibility: hidden"></pre>
+    <pre id="status" class="status" style="visibility: hidden; position: absolute; top: 12px; right: 8px; background-color: #666666; padding: 8px; cursor: alias; box-shadow: 6px 6px 8px 2px #333333;">loading</pre>
+    <div id="media" style="position: absolute; top: 0; left: 0; z-index: 1"></div>
+    <canvas id="output" width=1920 height=1080 style="width: 100%; height: 100%; position: fixed; top: 0; left: 0"></canvas>
+    <pre id="log" class="log" style="visibility: hidden; position: absolute; bottom: 0; left: 210px; height: 250px; width: 100%; pointer-events: none; overflow: hidden; color: #dddddd;"></pre>
     <div id="inspector" style="position: absolute; top: 0; right: 0; max-width: 800px; height: 100%; display: flex;"></div>
     <div id="json"></div>
 
@@ -54,7 +50,7 @@
       <div id="menuSceneSettings" class="menuSection">scene settings<span class="menuHide mdi mdi-dots-horizontal" style="float:right"></span><br>
         <button id="menuBtnReset" class="menuBtnWide">reset scene</button><br>
         <span class="menuItem">scene scale<br>
-          <form class="range">
+          <form class="menuRange">
             <input id="menuScaleSceneX" name="menuScaleSceneX" type="range" min="-5" max="5" step="0.01" value="0" oninput="menuScaleSceneXVal.value = `x-axis: ${menuScaleSceneX.valueAsNumber.toFixed(2)}`">
             <output id="menuScaleSceneXVal" name="menuScaleSceneXVal">x-axis: 0.00</output><br>
             <input id="menuScaleSceneY" name="menuScaleSceneY" type="range" min="-5" max="5" step="0.01" value="0" oninput="menuScaleSceneYVal.value = `y-axis: ${menuScaleSceneY.valueAsNumber.toFixed(2)}`">
@@ -63,7 +59,7 @@
             <output id="menuScaleSceneZVal" name="menuScaleSceneZVal">z-axis: 0.00</output><br>
           </form>
           <span class="menuItem">ground<br>
-            <form class="range">
+            <form class="menuRange">
               <input id="menuGroundRotation" name="menuGroundRotation" type="range" min="-3.14" max="3.14" step="0.01" value="0" oninput="menuGroundRotationVal.value = `angle: ${menuGroundRotation.valueAsNumber.toFixed(2)}`">
               <output id="menuGroundRotationVal" name="menuGroundRotationVal">angle: 0.00</output><br>
               <input id="menuGroundLevel" name="menuGroundLevel" type="range" min="-10" max="10" step="0.01" value="0" oninput="menuGroundLevelVal.value = `offset: ${menuGroundLevel.valueAsNumber.toFixed(2)}`">
@@ -73,11 +69,11 @@
       </div>
 
       <div id="menuInputSelector" class="menuSection">input selector<span class="menuHide mdi mdi-dots-horizontal" style="float:right"></span><br>
-        <input list="menuSelectInputList" id="menuSelectInput" type="text" name="menuInput" title="select input media" class="select" style="margin: 8px 0px 12px 4px; width: 182px; border-width: 0"/>
+        <input list="menuSelectInputList" id="menuSelectInput" type="text" name="menuInput" title="select input media" class="menuSelect" style="margin: 8px 0px 12px 4px; width: 195px; border-width: 0; background: beige"/>
         <datalist id="menuSelectInputList"></datalist>
-        <button id="menuBtnClear" class="menuBtnIcon mdi mdi-close" style="font-size: 12px; width: 18px; height: 22px"></button><br>
+        <button id="menuBtnClear" class="menuBtnIcon mdi mdi-close" style="font-size: 12px; width: 18px; height: 28px; vertical-align: middle; border-radius: 0; margin-top: -2px"></button><br>
         <span class="menuItem">filters<br>
-          <form class="range">
+          <form class="menuRange">
             <input id="menuMinScore" name="menuMinScore" type="range" min="0.1" max="1" step="0.01" value="1.00" oninput="menuMinScoreVal.value = `min score: ${menuMinScore.valueAsNumber.toFixed(2)}`">
             <output id="menuMinScoreVal" name="menuMinScoreVal">min score: 1.00</output><br>
             <input id="menuMaxPersons" name="menuMaxPersons" type="range" min="1" max="10" step="1" value="1" oninput="menuMaxPersonsVal.value = `max persons: ${menuMaxPersons.valueAsNumber.toFixed(0)}`">
@@ -95,13 +91,13 @@
 
       <div id="menuProcessingOptions" class="menuSection">processing options<span class="menuHide mdi mdi-dots-horizontal" style="float:right"></span><br>
         <span class="menuItem">interpolation
-          <form class="range">
+          <form class="menuRange">
             <input id="menuInterpolation" name="menuInterpolation" type="range" min="0" max="99" step="1" value="0" oninput="menuInterpolationVal.value = `steps: ${menuInterpolation.valueAsNumber.toFixed(0)}`">
             <output id="menuInterpolationVal" name="menuInterpolationVal">steps: 0</output><br>
           </form>
         </span>
         <span class="menuItem">keypoints scalling<br>
-          <form class="range">
+          <form class="menuRange">
             <input id="menuScalePersonX" name="menuScalePersonX" type="range" min="-5" max="5" step="0.01" value="0" oninput="menuScalePersonXVal.value = `x-axis: ${menuScalePersonX.valueAsNumber.toFixed(2)}`">
             <output id="menuScalePersonXVal" name="menuScalePersonXVal">x-axis: 0.00</output><br>
             <input id="menuScalePersonY" name="menuScalePersonY" type="range" min="-5" max="5" step="0.01" value="0" oninput="menuScalePersonYVal.value = `y-axis: ${menuScalePersonY.valueAsNumber.toFixed(2)}`">
@@ -110,19 +106,17 @@
             <output id="menuScalePersonZVal" name="menuScalePersonZVal">z-axis: 0.00</output><br>
           </form>
         </span>
-        <select id="menuModel" name="menuModel" title="model" class="select">
+        <select id="menuModel" name="menuModel" title="model" class="menuSelect">
           <option value="skeleton" selected>model: avatar</option>
           <option value="simple">model: simple</option>
           <option value="both">model: combined</option>
         </select>
-        <select id="menuMaterial" name="menuModel" title="model" class="select">
+        <select id="menuMaterial" name="menuModel" title="model" class="menuSelect">
           <option value="standard">material: standard</option>
           <option value="glass" selected>material: glass</option>
           <option value="metal">material: metal</option>
         </select>
         <button id="menuBtnWireframe" class="menuBtnWide">skeleton wireframe</button>
-        <button id="menuBtnFrustum" class="menuBtnWide">light frustum</button>
-        <button id="menuBtnBBoxGizmo" class="menuBtnWide">bounding box gizmo</button>
       </div>
 
       <div id="menuViewControls" class="menuSection">view controls<span class="menuHide mdi mdi-dots-horizontal" style="float:right"></span><br><br>
@@ -164,6 +158,7 @@
             <button id="menuBtnAnchors" class="menuBtnIcon mdi mdi-anchor" title="show bone anchors"></button>
             <button id="menuBtnAxisTitle" class="menuBtnIcon mdi mdi-sign-text" title="show axis titles"></button>
             <button id="menuBtnPersonTitle" class="menuBtnIcon mdi mdi-card-text" title="show person name"></button>
+            <button id="menuBtnBBoxGizmo" class="menuBtnIcon mdi mdi-package-variant-closed" title="bounding box gizmo"></button>
           </span>
         </div><br><br>
       </div>
@@ -191,6 +186,7 @@
       <div id="menuDiagnostics" class="menuSection">diagnostics<span class="menuHide mdi mdi-dots-horizontal" style="float:right"></span><br>
         <button id="menuBtnInspector" class="menuBtnWide">open inspector</button><br>
         <button id="menuBtnLog" class="menuBtnWide">view log</button><br>
+        <button id="menuBtnFrustum" class="menuBtnWide">light frustum</button>
         <button id="menuBtnStatus" class="menuBtnWide">view status bar</button><br>
       </div>
     </div>
