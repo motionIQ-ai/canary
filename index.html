@@ -15,11 +15,11 @@
     <style>
       @font-face { font-family: 'Lato'; font-display: swap; font-style: normal; font-weight: 100; src: local('Lato'), url('./assets/lato-light.ttf') }
       html { font-family: 'Lato'; font-size: 16px; font-variant: small-caps; }
-      body { margin: 0; background: black; color: white; overflow-x: hidden; width: 100vw; height: 100vh; }
+      body {margin: 0;background: black;color: white;overflow-x: hidden;width: 100vw;height: 100vh;}
       ::-webkit-scrollbar { display: none; width: 0px; }
       input { font-family: 'Lato'; font-size: 0.875rem; font-variant: small-caps; }
       select { font-family: 'Lato'; font-size: 0.875rem; font-variant: small-caps; }
-      .menu {position: absolute;left: 0;top: 0;width: 220px;padding: 12px;min-height: 100%;margin: 0;overflow: scroll;visibility: hidden;}
+      .menu {position: absolute;left: 0;top: 0;width: 220px;padding: 12px;min-height: 100%;margin: 0;overflow: scroll;visibility: hidden;max-height: 2000px;}
       .menu:hover { background-color: black }
       .menuSection { font-weight: 800; overflow: hidden; margin-bottom: 2rem; letter-spacing: 3px; line-height: 1.4rem; user-select: none; }
       .menuItem { font-weight: 400; margin-left: 6px; letter-spacing: 0px;}
@@ -49,26 +49,18 @@
   <!-- menu -->
   <div id="menu" class="menu">
     <div id="menuResizeBar" style="float: right; width: 8px; height: 100vw; background-color: transparent; margin-right: -12px; margin-top: -12px; cursor: col-resize"></div>
-    <div id="menuSceneSettings" class="menuSection">scene settings<span class="menuHide mdi mdi-dots-horizontal" style="float:right"></span><br>
-      <button id="menuBtnReset" class="menuBtnWide">reset scene</button><br>
-      <span class="menuItem">scene scale<br>
-        <form class="menuRange">
-          <input id="menuScaleSceneX" name="menuScaleSceneX" type="range" min="-5" max="5" step="0.01" value="0">
-          <output id="menuScaleSceneXVal" name="menuScaleSceneXVal">x-axis: 0.00</output><br>
-          <input id="menuScaleSceneY" name="menuScaleSceneY" type="range" min="-5" max="5" step="0.01" value="0">
-          <output id="menuScaleSceneYVal" name="menuScaleSceneYVal">y-axis: 0.00</output><br>
-          <input id="menuScaleSceneZ" name="menuScaleSceneZ" type="range" min="-5" max="5" step="0.01" value="0">
-          <output id="menuScaleSceneZVal" name="menuScaleSceneZVal">z-axis: 0.00</output><br>
-        </form>
-        <span class="menuItem">ground<br>
-          <form class="menuRange">
-            <input id="menuGroundRotation" name="menuGroundRotation" type="range" min="-3.14" max="3.14" step="0.01" value="0">
-            <output id="menuGroundRotationVal" name="menuGroundRotationVal">angle: 0.00</output><br>
-            <input id="menuGroundLevel" name="menuGroundLevel" type="range" min="-10" max="10" step="0.01" value="0">
-            <output id="menuGroundLevelVal" name="menuGroundLevelVal">offset: 0.00</output><br>
-          </form>
-      </span>
-    </div>
+      <div style="text-align: center"><img src="./assets/logo.png" width="50%"></div><br>
+      <div style="display: grid">
+        <div>
+          <span class="menuSection" style="float: left; margin-top: 12px">scene</span>
+          <span class="menuBtnSpan">
+            <button id="menuBtnProjectNew" class="menuBtnIcon mdi mdi-file-document" title="new project"></button>
+            <button id="menuBtnProjectLoad" class="menuBtnIcon mdi mdi-file-download" title="load project"></button>
+            <button id="menuBtnProjectSave" class="menuBtnIcon mdi mdi-file-upload" title="save project"></button>
+            <button id="menuBtnProjectReset" class="menuBtnIcon mdi mdi-file-refresh" title="reset project"></button>
+          </span>
+        </div>
+      </div><br>
 
     <div id="menuInputSelector" class="menuSection">input selector<span class="menuHide mdi mdi-dots-horizontal" style="float:right"></span><br>
       <input list="menuSelectInputList" id="menuSelectInput" type="text" name="menuInput" title="select input media" class="menuSelect" style="margin: 8px 0px 12px 4px; width: 80%; border-width: 0; background: beige; color: black"/>
@@ -108,6 +100,23 @@
           <input id="menuInterpolation" name="menuInterpolation" type="range" min="0" max="99" step="1" value="0">
           <output id="menuInterpolationVal" name="menuInterpolationVal">steps: 0</output><br>
         </form>
+      </span>
+      <span class="menuItem">scene scale<br>
+        <form class="menuRange">
+          <input id="menuScaleSceneX" name="menuScaleSceneX" type="range" min="-5" max="5" step="0.01" value="0">
+          <output id="menuScaleSceneXVal" name="menuScaleSceneXVal">x-axis: 0.00</output><br>
+          <input id="menuScaleSceneY" name="menuScaleSceneY" type="range" min="-5" max="5" step="0.01" value="0">
+          <output id="menuScaleSceneYVal" name="menuScaleSceneYVal">y-axis: 0.00</output><br>
+          <input id="menuScaleSceneZ" name="menuScaleSceneZ" type="range" min="-5" max="5" step="0.01" value="0">
+          <output id="menuScaleSceneZVal" name="menuScaleSceneZVal">z-axis: 0.00</output><br>
+        </form>
+        <span class="menuItem">ground<br>
+          <form class="menuRange">
+            <input id="menuGroundRotation" name="menuGroundRotation" type="range" min="-3.14" max="3.14" step="0.01" value="0">
+            <output id="menuGroundRotationVal" name="menuGroundRotationVal">angle: 0.00</output><br>
+            <input id="menuGroundLevel" name="menuGroundLevel" type="range" min="-10" max="10" step="0.01" value="0">
+            <output id="menuGroundLevelVal" name="menuGroundLevelVal">offset: 0.00</output><br>
+          </form>
       </span>
       <span class="menuItem">keypoints scalling<br>
         <form class="menuRange">
