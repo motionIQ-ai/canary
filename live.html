@@ -14,23 +14,25 @@
     <link href="https://cdn.jsdelivr.net/npm/@mdi/font/css/materialdesignicons.min.css" rel="stylesheet"> <!-- https://materialdesignicons.com/ -->
     <style>
       @font-face { font-family: 'Lato'; font-display: swap; font-style: normal; font-weight: 100; src: local('Lato'), url('./assets/lato-light.ttf') }
-      html { font-family: 'Lato'; font-size: 16px; font-variant: small-caps; }
-      body { margin: 0; background: black; color: white; overflow-x: hidden; width: 100vw; height: 100vh; }
+      @font-face { font-family: 'CenturyGothic'; font-display: swap; font-style: normal; font-weight: 100; src: local('Lato'), url('./assets/century-gothic.ttf') }
+      html { font-family: 'CenturyGothic'; font-size: 16px; font-variant: small-caps; }
+      body {margin: 0;background: black;color: white;overflow-x: hidden;width: 100vw;height: 100vh;}
       ::-webkit-scrollbar { display: none; width: 0px; }
-      input { font-family: 'Lato'; font-size: 0.875rem; font-variant: small-caps; }
-      select { font-family: 'Lato'; font-size: 0.875rem; font-variant: small-caps; }
-      .menu { position: absolute; left: 0; top: 0; width: 220px; min-height: 100%; max-height: 100%; padding: 12px; margin: 0; overflow: scroll; visibility: hidden; }
+      input { font-family: 'CenturyGothic'; font-size: 0.875rem; font-variant: small-caps; }
+      select { font-family: 'CenturyGothic'; font-size: 0.875rem; font-variant: small-caps; }
+      .menu {position: absolute;left: 0;top: 0;width: 220px;padding: 12px;min-height: 100%;margin: 0;overflow: scroll;visibility: hidden;max-height: 2000px;}
       .menu:hover { background-color: black }
       .menuSection { font-weight: 800; overflow: hidden; margin-bottom: 2rem; letter-spacing: 3px; line-height: 1.4rem; user-select: none; }
       .menuItem { font-weight: 400; margin-left: 6px; letter-spacing: 0px;}
       .menuHide:hover { color:yellow; transform: scale(1.2); }
-      .menuBtnWide { margin: 4px; padding: 8px; background-color: #50555C; color: white; font-family: 'Lato'; font-variant: small-caps; width: 95%; letter-spacing: 1px; border-width: 0; box-shadow: 6px 6px 8px 2px #333333; }
+      .menuBtnWide { margin: 4px; padding: 8px; background-color: #50555C; color: white; font-family: 'CenturyGothic'; font-variant: small-caps; width: 95%; letter-spacing: 1px; border-width: 0; box-shadow: 6px 6px 8px 2px #333333; }
       .menuBtnWide:hover { background-color: #ffc100 }
       .menuBtnSpan { float: right; letter-spacing: -4px; }
       .menuBtnIcon { margin: 0 2px 2px 0; padding: 0; background-color: #50555C; color: white; width: 48px; height: 48px; font-size: 1.625rem; border-width: 0; border-radius: 0; box-shadow: 6px 6px 8px 2px #333333; transition: all 0.5s; letter-spacing: -4px; }
       .menuBtnIcon:hover { background-color: #ffc100; opacity: 60%; }
-      .menuSelect { font-family: 'Lato'; font-size: 1rem; font-variant: small-caps; height: 24px; width: 95%; background-color: #666666; color: white; padding: 2px; margin: 4px; box-shadow: 6px 6px 8px 2px #333333; }
+      .menuSelect { font-family: 'CenturyGothic'; font-size: 1rem; font-variant: small-caps; height: 24px; width: 95%; background-color: #666666; color: white; padding: 2px; margin: 4px; box-shadow: 6px 6px 8px 2px #333333; }
       .menuRange { background-color: #50555C; color: white; font-size: 0.7rem; margin: 4px; padding: 2px; box-shadow: 6px 6px 8px 2px #333333; width: 95%; }
+      .menuInputText { position: absolute; top: 30%; left: 40%; padding: 20px; text-align: center; box-shadow: 6px 6px 8px 2px #333333; z-index: 99; }
       input[type=range] { width: 60%; height: 16px; -webkit-appearance: none; margin: 4px; margin-right: 8px; background: beige; box-shadow: 6px 6px 8px 2px #333333; }
       input[type=range]:focus { outline: none; }
       input[type=range]::-webkit-slider-runnable-track { width: 100%; height: 12px; cursor: pointer; border-radius: 0; border: 0px solid #000000; }
@@ -40,7 +42,7 @@
   </head>
   <body>
     <pre id="status" class="status" style="visibility: hidden; position: absolute; top: 12px; right: 8px; background-color: #666666; padding: 8px; cursor: alias; box-shadow: 6px 6px 8px 2px #333333; z-index: 1">loading</pre>
-    <div id="media" style="position: absolute; top: 0; left: 0; z-index: 1"></div>
+    <div id="media" style="position: fixed; top: 0; left: 0; z-index: 1"></div>
     <canvas id="output" width=1920 height=1080 style="width: 100%; height: 100%; position: fixed; top: 0; left: 0"></canvas>
     <pre id="log" class="log" style="visibility: hidden; position: absolute; bottom: 0; left: 210px; height: 250px; width: 100%; pointer-events: none; overflow: hidden; color: #dddddd;"></pre>
     <div id="inspector" style="position: absolute; top: 0; right: 0; max-width: 800px; height: 100%; display: flex;"></div>
@@ -49,31 +51,24 @@
   <!-- menu -->
   <div id="menu" class="menu">
     <div id="menuResizeBar" style="float: right; width: 8px; height: 100vw; background-color: transparent; margin-right: -12px; margin-top: -12px; cursor: col-resize"></div>
-    <div id="menuSceneSettings" class="menuSection">scene settings<span class="menuHide mdi mdi-dots-horizontal" style="float:right"></span><br>
-      <button id="menuBtnReset" class="menuBtnWide">reset scene</button><br>
-      <span class="menuItem">scene scale<br>
-        <form class="menuRange">
-          <input id="menuScaleSceneX" name="menuScaleSceneX" type="range" min="-5" max="5" step="0.01" value="0">
-          <output id="menuScaleSceneXVal" name="menuScaleSceneXVal">x-axis: 0.00</output><br>
-          <input id="menuScaleSceneY" name="menuScaleSceneY" type="range" min="-5" max="5" step="0.01" value="0">
-          <output id="menuScaleSceneYVal" name="menuScaleSceneYVal">y-axis: 0.00</output><br>
-          <input id="menuScaleSceneZ" name="menuScaleSceneZ" type="range" min="-5" max="5" step="0.01" value="0">
-          <output id="menuScaleSceneZVal" name="menuScaleSceneZVal">z-axis: 0.00</output><br>
-        </form>
-        <span class="menuItem">ground<br>
-          <form class="menuRange">
-            <input id="menuGroundRotation" name="menuGroundRotation" type="range" min="-3.14" max="3.14" step="0.01" value="0">
-            <output id="menuGroundRotationVal" name="menuGroundRotationVal">angle: 0.00</output><br>
-            <input id="menuGroundLevel" name="menuGroundLevel" type="range" min="-10" max="10" step="0.01" value="0">
-            <output id="menuGroundLevelVal" name="menuGroundLevelVal">offset: 0.00</output><br>
-          </form>
-      </span>
-    </div>
+      <!-- <div style="text-align: center"><img src="./assets/logo.png" width="50%"></div><br> -->
+      <div style="display: grid">
+        <div>
+          <span class="menuSection" style="float: left; margin-top: 12px">scene</span>
+          <span class="menuBtnSpan">
+            <button id="menuBtnProjectNew" class="menuBtnIcon mdi mdi-file-document" title="new project"></button>
+            <button id="menuBtnProjectReset" class="menuBtnIcon mdi mdi-file-refresh" title="reset project"></button>
+            <button id="menuBtnProjectLoad" class="menuBtnIcon mdi mdi-file-download" title="load project"></button>
+            <button id="menuBtnProjectSave" class="menuBtnIcon mdi mdi-file-upload" title="save project"></button>
+            <button id="menuBtnProjectShare" class="menuBtnIcon mdi mdi-share-all" title="share project"></button>
+          </span>
+        </div>
+      </div><br>
 
     <div id="menuInputSelector" class="menuSection">input selector<span class="menuHide mdi mdi-dots-horizontal" style="float:right"></span><br>
       <input list="menuSelectInputList" id="menuSelectInput" type="text" name="menuInput" title="select input media" class="menuSelect" style="margin: 8px 0px 12px 4px; width: 80%; border-width: 0; background: beige; color: black"/>
       <datalist id="menuSelectInputList"></datalist>
-      <button id="menuBtnClear" class="mdi mdi-close" style="font-size: 0.75rem; width: 28px; height: 28px; vertical-align: middle; border-radius: 0; margin-top: -4px; margin-left: -7px; border-width: 0; background-color: beige;"></button><br>
+      <button id="menuBtnClear" class="mdi mdi-close" style="font-size: 0.75rem; width: 28px; height: 28px; vertical-align: middle; border-radius: 0; margin-top: -2px; margin-left: -8px; border-width: 0; background-color: beige;"></button><br>
       <div style="display: grid">
         <div>
           <span class="menuItem" style="float: left; margin-top: 8px; margin-left: 8px">options</span>
@@ -108,6 +103,23 @@
           <input id="menuInterpolation" name="menuInterpolation" type="range" min="0" max="99" step="1" value="0">
           <output id="menuInterpolationVal" name="menuInterpolationVal">steps: 0</output><br>
         </form>
+      </span>
+      <span class="menuItem">scene scale<br>
+        <form class="menuRange">
+          <input id="menuScaleSceneX" name="menuScaleSceneX" type="range" min="-5" max="5" step="0.01" value="0">
+          <output id="menuScaleSceneXVal" name="menuScaleSceneXVal">x-axis: 0.00</output><br>
+          <input id="menuScaleSceneY" name="menuScaleSceneY" type="range" min="-5" max="5" step="0.01" value="0">
+          <output id="menuScaleSceneYVal" name="menuScaleSceneYVal">y-axis: 0.00</output><br>
+          <input id="menuScaleSceneZ" name="menuScaleSceneZ" type="range" min="-5" max="5" step="0.01" value="0">
+          <output id="menuScaleSceneZVal" name="menuScaleSceneZVal">z-axis: 0.00</output><br>
+        </form>
+        <span class="menuItem">ground<br>
+          <form class="menuRange">
+            <input id="menuGroundRotation" name="menuGroundRotation" type="range" min="-3.14" max="3.14" step="0.01" value="0">
+            <output id="menuGroundRotationVal" name="menuGroundRotationVal">angle: 0.00</output><br>
+            <input id="menuGroundLevel" name="menuGroundLevel" type="range" min="-10" max="10" step="0.01" value="0">
+            <output id="menuGroundLevelVal" name="menuGroundLevelVal">offset: 0.00</output><br>
+          </form>
       </span>
       <span class="menuItem">keypoints scalling<br>
         <form class="menuRange">
@@ -203,13 +215,24 @@
             <button id="menuBtnChart" class="menuBtnIcon mdi mdi-chart-areaspline" title="bone chart"></button>
           </span>
         </div>
+        <div id="menuLimits" class="menuItem" style="text-align: right"></div>
+        <div>
+          <span class="menuItem" style="float: left; margin-top: 8px; margin-left: 8px">limits</span>
+          <span class="menuBtnSpan">
+            <button id="menuBtnLimitHighlight" class="menuBtnIcon mdi mdi-lightbulb" title="bone highlight"></button>
+            <button id="menuBtnLimitShader" class="menuBtnIcon mdi mdi-sun-wireless" title="bone shader"></button>
+            <button id="menuBtnLimitEdit" class="menuBtnIcon mdi mdi-cookie-edit" title="editor"></button>
+          </span>
+        </div>
         <div>
           <span class="menuItem" style="float: left; margin-top: 8px; margin-left: 8px">details</span>
           <span id="menuBtnBoneListImage" class="menuItem" style="float: right; margin-top: 8px; margin-right: 8px; color: #CCCCFF; cursor: pointer">image</span>
-          <span id="menuBtnBoneListText" class="menuItem" style="float: right; margin-top: 8px; margin-right: 8px; color: #CCCCFF; cursor: pointer">text</span>
+          <span id="menuBtnBoneListText" class="menuItem" style="float: right; margin-top: 8px; color: #CCCCFF; cursor: pointer">text |</span>
+          <span id="menuBtnBoneListNone" class="menuItem" style="float: right; margin-top: 8px; color: #CCCCFF; cursor: pointer">none |</span>
+          <span id="menuBtnBoneListAll" class="menuItem" style="float: right; margin-top: 8px; color: #CCCCFF; cursor: pointer">all |</span>
         </div>
         <div id="menuBoneList" class="menuItem" style="display: none; margin-left: 16px; margin-top: 8px"></div>
-        <img id="menuBoneImage" class="menuItem" style="display: block; width: 308px; margin-top: 16px; margin-left: 0" src="./assets/avatar.png">
+        <img id="menuBoneImage" class="menuItem" style="display: block; width: 328px; margin-top: 16px; margin-left: 0" src="./assets/avatar.png">
       </div>
     </div>
 

@@ -42,7 +42,7 @@
   </head>
   <body>
     <pre id="status" class="status" style="visibility: hidden; position: absolute; top: 12px; right: 8px; background-color: #666666; padding: 8px; cursor: alias; box-shadow: 6px 6px 8px 2px #333333; z-index: 1">loading</pre>
-    <div id="media" style="position: absolute; top: 0; left: 0; z-index: 1"></div>
+    <div id="media" style="position: fixed; top: 0; left: 0; z-index: 1"></div>
     <canvas id="output" width=1920 height=1080 style="width: 100%; height: 100%; position: fixed; top: 0; left: 0"></canvas>
     <pre id="log" class="log" style="visibility: hidden; position: absolute; bottom: 0; left: 210px; height: 250px; width: 100%; pointer-events: none; overflow: hidden; color: #dddddd;"></pre>
     <div id="inspector" style="position: absolute; top: 0; right: 0; max-width: 800px; height: 100%; display: flex;"></div>
@@ -57,9 +57,10 @@
           <span class="menuSection" style="float: left; margin-top: 12px">scene</span>
           <span class="menuBtnSpan">
             <button id="menuBtnProjectNew" class="menuBtnIcon mdi mdi-file-document" title="new project"></button>
+            <button id="menuBtnProjectReset" class="menuBtnIcon mdi mdi-file-refresh" title="reset project"></button>
             <button id="menuBtnProjectLoad" class="menuBtnIcon mdi mdi-file-download" title="load project"></button>
             <button id="menuBtnProjectSave" class="menuBtnIcon mdi mdi-file-upload" title="save project"></button>
-            <button id="menuBtnProjectReset" class="menuBtnIcon mdi mdi-file-refresh" title="reset project"></button>
+            <button id="menuBtnProjectShare" class="menuBtnIcon mdi mdi-share-all" title="share project"></button>
           </span>
         </div>
       </div><br>
@@ -226,10 +227,12 @@
         <div>
           <span class="menuItem" style="float: left; margin-top: 8px; margin-left: 8px">details</span>
           <span id="menuBtnBoneListImage" class="menuItem" style="float: right; margin-top: 8px; margin-right: 8px; color: #CCCCFF; cursor: pointer">image</span>
-          <span id="menuBtnBoneListText" class="menuItem" style="float: right; margin-top: 8px; margin-right: 8px; color: #CCCCFF; cursor: pointer">text</span>
+          <span id="menuBtnBoneListText" class="menuItem" style="float: right; margin-top: 8px; color: #CCCCFF; cursor: pointer">text |</span>
+          <span id="menuBtnBoneListNone" class="menuItem" style="float: right; margin-top: 8px; color: #CCCCFF; cursor: pointer">none |</span>
+          <span id="menuBtnBoneListAll" class="menuItem" style="float: right; margin-top: 8px; color: #CCCCFF; cursor: pointer">all |</span>
         </div>
         <div id="menuBoneList" class="menuItem" style="display: none; margin-left: 16px; margin-top: 8px"></div>
-        <img id="menuBoneImage" class="menuItem" style="display: block; width: 308px; margin-top: 16px; margin-left: 0" src="./assets/avatar.png">
+        <img id="menuBoneImage" class="menuItem" style="display: block; width: 328px; margin-top: 16px; margin-left: 0" src="./assets/avatar.png">
       </div>
     </div>
 
