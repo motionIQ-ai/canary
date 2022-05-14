@@ -9,17 +9,20 @@
     <meta name="description" content="motionIQ">
     <meta name="msapplication-tooltip" content="motionIQ">
     <meta name="theme-color" content="#000000">
-    <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon">
-    <script src="./dist/client.js" type="module"></script>
+    <link rel="manifest" href="./manifest.webmanifest">
+    <link rel="apple-touch-icon" href="favicon.png">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
     <link href="https://cdn.jsdelivr.net/npm/@mdi/font/css/materialdesignicons.min.css" rel="stylesheet"> <!-- https://materialdesignicons.com/ -->
+    <script src="./dist/client.js" type="module"></script>
     <style>
-      @font-face { font-family: 'CenturyGothic'; font-display: swap; font-style: normal; font-weight: 100; src: local('Lato'), url('./assets/century-gothic.ttf') }
+      @font-face { font-family: 'CenturyGothic'; font-display: swap; font-style: normal; font-weight: 100; src: local('Lato'), url('./assets/century-gothic.ttf'); }
       html { font-family: 'CenturyGothic'; font-size: 16px; font-variant: small-caps; }
-      body {margin: 0;background: black;color: white;overflow-x: hidden;width: 100vw;height: 100vh;}
+      body { margin: 0;background: black; color: white; overflow-x: hidden; width: 100vw; height: 100vh; }
       ::-webkit-scrollbar { display: none; width: 0px; }
     </style>
   </head>
   <body>
+    <!-- react root element -->
     <div id="root"></div>
   </body>
 </html>

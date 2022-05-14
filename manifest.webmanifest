@@ -1,0 +1,10 @@
+{
+  "name": "motionIQ",
+  "short_name": "motionIQ",
+  "icons": [{ "src": "favicon.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }],
+  "start_url": "client.html",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#000000"
+}
