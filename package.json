@@ -1,0 +1,10 @@
+{
+  "name": "motioniq",
+  "description": "motionIQ",
+  "author": "Vladimir Mandic <vladmandic@motioniq.ai>",
+  "version": "0.0.1",
+  "type": "module",
+  "keywords": [
+    "motioniq"
+  ]
+}
