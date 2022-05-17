@@ -13,8 +13,7 @@
     <script src="./dist/live.js" type="module"></script>
     <link href="https://cdn.jsdelivr.net/npm/@mdi/font/css/materialdesignicons.min.css" rel="stylesheet"> <!-- https://materialdesignicons.com/ -->
     <style>
-      @font-face { font-family: 'Lato'; font-display: swap; font-style: normal; font-weight: 100; src: local('Lato'), url('./assets/lato-light.ttf') }
-      @font-face { font-family: 'CenturyGothic'; font-display: swap; font-style: normal; font-weight: 100; src: local('Lato'), url('./assets/century-gothic.ttf') }
+      @font-face { font-family: 'CenturyGothic'; font-display: swap; font-style: normal; font-weight: 100; src: local('CenturyGothic'), url('./assets/century-gothic.ttf') }
       html { font-family: 'CenturyGothic'; font-size: 16px; font-variant: small-caps; }
       body {margin: 0;background: black;color: white;overflow-x: hidden;width: 100vw;height: 100vh;}
       ::-webkit-scrollbar { display: none; width: 0px; }
@@ -173,7 +172,8 @@
           <span class="menuItem" style="float: left; margin-top: 8px; margin-left: 8px">rotate</span>
           <span class="menuBtnSpan">
             <button id="menuCameraAutoRotate" class="menuBtnIcon mdi mdi-axis-z-rotate-counterclockwise" title="auto rotate"></button>
-            <button id="menuCameraRotateAlpha" class="menuBtnIcon mdi mdi-rotate-360" title="rotate 360"></button>
+            <button id="menuCameraRotateAlpha" class="menuBtnIcon mdi mdi-rotate-360" title="rotate alpha 360"></button>
+            <button id="menuCameraRotateBeta" class="menuBtnIcon mdi mdi-rotate-360" title="rotate beta 360"></button>
           </span>
         </div>
         <div>
